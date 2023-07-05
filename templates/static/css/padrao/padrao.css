@@ -1,0 +1,13 @@
+#cor_fundo_just{
+    background-color: rgba(0, 0, 0, 0.342);
+}
+
+
+#topo{
+    top: 20%;
+}
+
+.confButton{
+    border: none !important;
+    background-color: #212529 !important;
+}

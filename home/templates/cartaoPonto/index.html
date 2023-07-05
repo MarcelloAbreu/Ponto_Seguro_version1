@@ -1,0 +1,151 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style_Cartao_Ponto.css' %}">
+    <title>Folha Ponto</title>
+</head>
+<body>
+    <table border="1" style="width:500px; padding: 0px 1px;">
+      <tbody >
+      <tr style="height: 18px;">
+      <td style="width: 50%; height: 20px;"><b>Nome:</b>  {{user.get_full_name}}</td>
+      <td style="width: 50%; height: 20px;"><b>Matricula:</b>  {{user.matricula}}</td>
+      </tr>
+      <tr style="height: 18px;">
+      <td style="width: 50%; height: 20px;"><b>Cargo:</b>  {{user.cargo.nmCargo}}</td>
+      <td style="width: 50%; height: 20px;"><b>Empresa:</b>  Ponto Seguro</td>
+      </tr>
+      <tr style="height: 50px;">
+      <td style="width: 50%; height: 50px;"><b>Escala:</b> <br>
+         {{user.escala.nmEscala}}
+      </td>
+      <td style="width: 50%; height: 50px;"><b>Observação:</b> <br>
+      <b>Admissão:</b>  {{user.dat_inicia_trab}} 
+        <br>
+      <b>Mês/Ano:</b>  {{periodo}}
+      </td>
+      </tr>
+      </tbody>
+      </table>
+      <br>
+      <br>
+    <main class="espacamento_bottom">
+        <div class="dimenciona alinha">
+            <table id="myTable" class="border_1px tamanho">
+              <thead>
+                <tr>
+                  <th id="title" scope="col" ></th>
+                  <th id="title" scope="col" class="borderTabela">Data de Registro</th>
+                  <th id="title" scope="col" class="borderTabela">Ent. Mat.</th>
+                  <th id="title" scope="col" class="borderTabela">Sai. Mat.</th>
+                  <th id="title" scope="col" class="borderTabela">Ent. Vesp.</th>
+                  <th id="title" scope="col" class="borderTabela">Sai. Vesp.</th>
+                  <th id="title" scope="col" class="borderTabela">Qtd Hora Extra</th>
+                  <th id="title" scope="col" class="borderTabela">Tipo</th>
+                  <th id="title" scope="col" class="borderTabela">Status</th>
+                  <th id="title" scope="col" class="borderTabela">Justificativa</th>
+                </tr>
+              </thead >
+              <tbody >
+                {% for key, value in registros %}
+                <tr>
+                  <th scope="row">{{forloop.counter}}</th>
+                  <td>{{value.0.fields.dataReg}}</td>
+                  <td> 
+                    {% if value.0.fields.horEnt1 != None %}
+                      {% if value.0.fields.altEnt1 == True %}
+                        <span style="color: red;">{{value.0.fields.horEnt1}} *</span>
+                      {% else %}
+                        {{value.0.fields.horEnt1}}
+                      {% endif %}
+                    {% else %}
+                      N/A
+                    {% endif %}
+                  </td>
+                  <td>
+                    {% if value.0.fields.horEnt1 != None %}
+                      {% if value.0.fields.horSai2 != None %}
+                        {% if value.0.fields.altSai2 == True %}
+                          <span style="color: red;">{{value.0.fields.horSai2}} *</span>
+                        {% else %}
+                          {{value.0.fields.horSai2}}
+                        {% endif %}
+                      {% else %}
+                        ------
+                      {% endif %}
+                    {% else %}
+                      N/A
+                    {% endif %}        
+            
+                  </td>
+                  <td>
+                    {% if value.0.fields.horEnt1 != None %}
+                      {% if value.0.fields.horEnt3 != None %}
+                        {% if value.0.fields.altEnt3 == True %}
+                          <span style="color: red;">{{value.0.fields.horEnt3}} *</span>
+                        {% else %}
+                          {{value.0.fields.horEnt3}}
+                        {% endif %}
+                      {% else %}
+                        ------              
+                      {% endif %}
+                    {% else %}
+                     N/A
+                    {% endif %}
+            
+                  </td>
+                  <td>
+                    {% if value.0.fields.horEnt1 != None %}
+                      {% if value.0.fields.horSai4 != None %}
+                        {% if value.0.fields.altSai4 == True %}
+                          <span style="color: red;">{{value.0.fields.horSai4}} *</span>
+                        {% else %}
+                          {{value.0.fields.horSai4}}
+                        {% endif %}
+                      {% else %}
+                        ------  
+                      {% endif %}
+                    {% else %}
+                      N/A
+                    {% endif %}
+                  </td>
+                  <td>{{value.0.fields.qtdHE}}</td>
+                  <td>{{value.0.fields.tpReg}}</td>
+                  <td>
+                    {% if value.0.fields.sitAPR == "PEN" %}
+                      Pendente
+                    {% elif value.0.fields.sitAPR == "REJ"%}
+                      Rejeitado
+                    {% elif value.0.fields.sitAPR == "APR"%}
+                      Aprovado
+                    {% endif %}
+                  </td>
+                  <td>
+                    {% if value.0.fields.justificativas %}
+                      Sim
+                    {% else %}
+                      Não
+                    {% endif %}
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+    </main>
+    <br>
+    <br>
+    <footer class="dimenciona alinha_end f-direction-column espacamento_top">
+        <div>
+        <span>_____________________</span>
+        <br>
+        <label for="">Assinatura do Funcionario</label>
+        </div>    
+    </footer>
+    
+</body>
+</html>
